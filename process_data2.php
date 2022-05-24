@@ -1,16 +1,15 @@
 <?php
 
-if (isset($_POST['cat'])) {
+if (isset($_GET['cat'])) {
     $connect = new PDO("mysql:host=localhost;dbname=exoajax", "root", "");
     $data = array();
-    $cat = $_POST['cat'];
-    $query = "SELECT title FROM movies JOIN categories WHERE categories.id = movies.fk_categ AND categories.category = $cat ;";
+    $cat = htmlspecialchars($_GET['cat']);
+    $query = "SELECT title FROM movies JOIN categories WHERE categories.categ_id = movies.fk_categ AND categories.category = '$cat' ;";
     $result = $connect->query($query);
-
 
     foreach ($result as $row) {
         $data[] = array(
-            'title'        =>    $row["title"]
+            'title' =>  $row["title"]
         );
     }
 
